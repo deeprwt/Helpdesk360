@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: light;
+  --ink-900: #060814;
+  --ink-700: #131a2a;
+  --ink-500: #26324c;
+  --ink-300: #7c8db7;
+  --ink-200: #aab8d8;
+  --ink-100: #d9e2ff;
+  --accent-amber: #ffc857;
+  --accent-coral: #ff6b6b;
+  --accent-lime: #95d65c;
+  --accent-teal: #12c6c2;
+  --accent-violet: #6a64ff;
+  --surface-100: #f7f8fc;
+  --surface-200: #eff1fb;
+  --surface-300: #dee4ff;
+  --border-soft: rgba(19, 26, 42, 0.08);
+  --border-strong: rgba(6, 8, 20, 0.18);
+  --shadow-soft: 0 20px 60px rgba(11, 14, 28, 0.12);
+  --gradient-sunrise: linear-gradient(135deg, #1c1e35, #2b304f, #3b1c52);
+  --gradient-card: linear-gradient(135deg, rgba(255, 200, 87, 0.12), rgba(106, 100, 255, 0.25));
+  font-family: 'Space Grotesk', 'Instrument Sans', sans-serif;
+}
