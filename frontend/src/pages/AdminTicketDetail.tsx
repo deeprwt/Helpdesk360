@@ -75,12 +75,7 @@ const AdminTicketDetail = () => {
     <LayoutShell title={ticket.title} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={adminDetailNav(ticket.id)} accent="violet">
       <section style={{ display: 'grid', gap: '24px', gridTemplateColumns: '2fr 1fr', alignItems: 'start' }}>
         <div>
-          <div style={{
-            borderRadius: '24px',
-            border: '1px solid rgba(255,255,255,0.12)',
-            padding: '24px',
-            marginBottom: '24px'
-          }}>
+          <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
             <h2>Resolution stream</h2>
             <Timeline
               items={comments.map((note) => ({
@@ -98,11 +93,11 @@ const AdminTicketDetail = () => {
               placeholder="Add internal or public commentary"
               style={{
                 borderRadius: '20px',
-                border: '1px solid rgba(255,255,255,0.12)',
+                border: '1px solid var(--border-strong)',
                 padding: '16px',
                 minHeight: '120px',
-                background: 'rgba(255,255,255,0.02)',
-                color: '#fff'
+                background: 'var(--panel-muted)',
+                color: 'var(--ink-900)'
               }}
             />
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'space-between' }}>
@@ -115,9 +110,9 @@ const AdminTicketDetail = () => {
                     style={{
                       padding: '10px 18px',
                       borderRadius: '999px',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                      background: visibility === type ? 'var(--accent-violet)' : 'transparent',
-                      color: visibility === type ? '#111322' : '#fff',
+                      border: '1px solid var(--border-strong)',
+                      background: visibility === type ? 'var(--gradient-pill)' : 'transparent',
+                      color: visibility === type ? '#fff' : 'var(--ink-600)',
                       cursor: 'pointer'
                     }}
                   >
@@ -132,8 +127,8 @@ const AdminTicketDetail = () => {
                   borderRadius: '999px',
                   border: 'none',
                   padding: '12px 24px',
-                  background: 'var(--accent-violet)',
-                  color: '#111322',
+                  background: 'var(--gradient-pill)',
+                  color: '#fff',
                   fontWeight: 600,
                   cursor: 'pointer'
                 }}
@@ -145,8 +140,8 @@ const AdminTicketDetail = () => {
         </div>
 
         <aside style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          <div style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.12)', padding: '20px' }}>
-            <label style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>
+          <div className="glass-panel" style={{ padding: '20px' }}>
+            <label style={{ fontSize: '12px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>
               Status
             </label>
             <select
@@ -157,9 +152,9 @@ const AdminTicketDetail = () => {
                 marginTop: '12px',
                 borderRadius: '16px',
                 padding: '14px',
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                color: '#fff'
+                background: 'var(--panel-muted)',
+                border: '1px solid var(--border-strong)',
+                color: 'var(--ink-900)'
               }}
             >
               {statusOptions.map((status) => (
@@ -170,20 +165,21 @@ const AdminTicketDetail = () => {
             </select>
           </div>
 
-          <div style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.12)', padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '20px' }}>
             <h3 style={{ marginTop: 0 }}>Remote guidance</h3>
-            <p style={{ color: 'var(--ink-100)', fontSize: '14px' }}>
+            <p style={{ color: 'var(--ink-500)', fontSize: '14px' }}>
               Kick off a secure remote session, review engineer notes, and trigger approvals as designed in the Figma remote page.
             </p>
             <button
               style={{
                 width: '100%',
                 borderRadius: '16px',
-                border: '1px solid rgba(255,255,255,0.12)',
+                border: '1px solid var(--border-strong)',
                 padding: '14px',
                 marginTop: '12px',
-                background: 'rgba(255,255,255,0.05)',
-                color: '#fff'
+                background: 'var(--panel-muted)',
+                color: 'var(--ink-900)',
+                fontWeight: 600
               }}
             >
               Launch remote console

@@ -7,23 +7,25 @@ interface PagePlaceholderProps {
 const PagePlaceholder = ({ heading, body, hint }: PagePlaceholderProps) => (
   <div
     style={{
-      borderRadius: '24px',
-      border: '1px dashed rgba(255,255,255,0.25)',
+      borderRadius: 'var(--radius-large)',
+      border: '1px dashed var(--border-strong)',
       padding: '32px',
-      background: 'rgba(255,255,255,0.02)',
+      background: 'var(--panel-muted)',
       textAlign: 'left'
     }}
   >
     <h2 style={{ marginTop: 0 }}>{heading}</h2>
-    <p style={{ color: 'var(--ink-100)', maxWidth: '720px' }}>{body}</p>
+    <p style={{ color: 'var(--ink-500)', maxWidth: '720px' }}>{body}</p>
     {hint && (
-      <p style={{
-        marginTop: '12px',
-        fontSize: '13px',
-        letterSpacing: '0.25em',
-        textTransform: 'uppercase',
-        color: 'var(--ink-300)'
-      }}>
+      <p
+        style={{
+          marginTop: '12px',
+          fontSize: '12px',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          color: 'var(--ink-400)'
+        }}
+      >
         {hint}
       </p>
     )}

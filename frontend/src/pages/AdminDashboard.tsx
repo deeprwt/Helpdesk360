@@ -44,18 +44,11 @@ const AdminDashboard = () => {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '16px' }}>
             <h2 style={{ margin: 0 }}>Live ticket mix</h2>
-            <span style={{ color: 'var(--ink-100)', fontSize: '14px' }}>Synced every 60s</span>
+            <span style={{ color: 'var(--ink-400)', fontSize: '14px' }}>Synced every 60s</span>
           </div>
           <TicketList tickets={tickets} role="admin" />
         </div>
-        <div
-          style={{
-            borderRadius: '24px',
-            border: '1px solid rgba(255,255,255,0.12)',
-            padding: '20px',
-            background: 'rgba(255,255,255,0.03)'
-          }}
-        >
+        <div className="glass-panel" style={{ padding: '20px' }}>
           <h3 style={{ marginTop: 0 }}>Backlog pressure</h3>
           <Timeline
             items={backlog.map((ticket) => ({

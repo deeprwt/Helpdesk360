@@ -2,8 +2,9 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import pino from 'pino-http';
-import ticketsRouter from './routes/tickets';
 import { env } from './config/env';
+import operationsRouter from './routes/operations';
+import ticketsRouter from './routes/tickets';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api', ticketsRouter);
+app.use('/api', operationsRouter);
 
 app.use((error: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(error);

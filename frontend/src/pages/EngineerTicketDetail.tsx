@@ -28,9 +28,9 @@ const EngineerTicketDetail = () => {
             ]}
           />
         </div>
-        <div style={{ borderRadius: '24px', border: '1px solid rgba(255,255,255,0.12)', padding: '20px' }}>
+        <div className="glass-panel" style={{ padding: '20px' }}>
           <h3 style={{ marginTop: 0 }}>Remote session</h3>
-          <p style={{ color: 'var(--ink-100)', fontSize: '14px' }}>
+          <p style={{ color: 'var(--ink-500)', fontSize: '14px' }}>
             Mirrors the remote page in the engineer prototype—session pin, voice channel toggle, device telemetry. Hook up with the real
             remote-control provider when ready.
           </p>

@@ -52,33 +52,33 @@ const UserNewTicket = () => {
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '18px', maxWidth: '720px' }}>
         {['title', 'requester', 'site'].map((field) => (
           <label key={field} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>{field}</span>
+            <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{field}</span>
             <input
               required
               value={form[field as 'title' | 'requester' | 'site']}
               onChange={(event) => handleChange(field as 'title' | 'requester' | 'site', event.target.value)}
               style={{
                 borderRadius: '16px',
-                border: '1px solid rgba(255,255,255,0.14)',
+                border: '1px solid var(--border-strong)',
                 padding: '14px',
-                background: 'rgba(255,255,255,0.04)',
-                color: '#fff'
+                background: 'var(--panel-muted)',
+                color: 'var(--ink-900)'
               }}
             />
           </label>
         ))}
 
         <label style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>Category</span>
+          <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Category</span>
           <select
             value={form.category}
             onChange={(event) => handleChange('category', event.target.value)}
             style={{
               borderRadius: '16px',
               padding: '14px',
-              background: 'rgba(255,255,255,0.02)',
-              color: '#fff',
-              border: '1px solid rgba(255,255,255,0.12)'
+              background: 'var(--panel-muted)',
+              color: 'var(--ink-900)',
+              border: '1px solid var(--border-strong)'
             }}
           >
             {['Hardware', 'Software', 'Network', 'Access'].map((option) => (
@@ -90,7 +90,7 @@ const UserNewTicket = () => {
         </label>
 
         <label style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>Priority</span>
+          <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Priority</span>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             {priorityOptions.map((priority) => (
               <button
@@ -101,9 +101,9 @@ const UserNewTicket = () => {
                   flex: '1 1 120px',
                   borderRadius: '18px',
                   padding: '14px',
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  background: form.priority === priority ? 'var(--accent-violet)' : 'rgba(255,255,255,0.02)',
-                  color: form.priority === priority ? '#0f1025' : '#fff',
+                  border: '1px solid var(--border-strong)',
+                  background: form.priority === priority ? 'var(--gradient-pill)' : 'transparent',
+                  color: form.priority === priority ? '#fff' : 'var(--ink-900)',
                   textTransform: 'capitalize'
                 }}
               >
@@ -114,7 +114,7 @@ const UserNewTicket = () => {
         </label>
 
         <label style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-200)' }}>Description</span>
+          <span style={{ fontSize: '13px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>Description</span>
           <textarea
             required
             value={form.description}
@@ -122,10 +122,10 @@ const UserNewTicket = () => {
             rows={6}
             style={{
               borderRadius: '20px',
-              border: '1px solid rgba(255,255,255,0.14)',
+              border: '1px solid var(--border-strong)',
               padding: '16px',
-              background: 'rgba(255,255,255,0.03)',
-              color: '#fff'
+              background: 'var(--panel-muted)',
+              color: 'var(--ink-900)'
             }}
           />
         </label>
@@ -137,8 +137,8 @@ const UserNewTicket = () => {
             borderRadius: '999px',
             border: 'none',
             padding: '14px',
-            background: 'var(--accent-violet)',
-            color: '#0f1025',
+            background: 'var(--gradient-pill)',
+            color: '#fff',
             fontWeight: 600
           }}
         >

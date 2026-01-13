@@ -5,39 +5,53 @@ interface StatCardProps extends InsightStat {
   icon?: string;
 }
 
-const StatCard = ({ label, value, trend, variant = 'neutral', icon }: StatCardProps) => (
-  <div
-    className={clsx('stat-card')}
-    style={{
-      background: 'var(--gradient-card)',
-      border: '1px solid rgba(255,255,255,0.14)',
-      borderRadius: '24px',
-      padding: '20px',
-      minHeight: '160px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      position: 'relative',
-      overflow: 'hidden'
-    }}
-  >
-    {icon && (
-      <span style={{ fontSize: '28px', lineHeight: 1, opacity: 0.85 }}>{icon}</span>
-    )}
-    <p style={{ margin: '8px 0 4px', color: 'var(--ink-100)', fontSize: '14px' }}>{label}</p>
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-      <span style={{ fontSize: '42px', fontWeight: 600 }}>{value}</span>
-      <span
-        style={{
-          color: variant === 'positive' ? 'var(--accent-lime)' : variant === 'negative' ? 'var(--accent-coral)' : '#fff',
-          fontSize: '14px'
-        }}
-      >
-        {trend > 0 ? '+' : ''}
-        {trend}%
-      </span>
+const StatCard = ({ label, value, trend, variant = 'neutral', icon }: StatCardProps) => {
+  const variantColor =
+    variant === 'positive' ? 'var(--accent-green)' : variant === 'negative' ? '#ff6b6b' : 'var(--ink-400)';
+
+  return (
+    <div
+      className={clsx('widget-card')}
+      style={{
+        padding: '24px',
+        minHeight: '150px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px'
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span className="eyebrow">{label}</span>
+        {icon && (
+          <span
+            style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '12px',
+              background: 'var(--panel-muted)',
+              display: 'grid',
+              placeItems: 'center',
+              fontSize: '18px'
+            }}
+          >
+            {icon}
+          </span>
+        )}
+      </div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
+        <span
+          style={{
+            fontSize: '40px',
+            fontWeight: 600,
+            color: 'var(--ink-900)'
+          }}
+        >
+          {value}
+        </span>
+        <span style={{ color: variantColor, fontWeight: 600 }}>{trend > 0 ? '+' : ''}{trend}%</span>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default StatCard;

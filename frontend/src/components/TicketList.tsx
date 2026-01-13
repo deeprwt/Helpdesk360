@@ -21,44 +21,57 @@ const statusPalette: Record<Ticket['status'], string> = {
 
 const TicketList = ({ tickets, role, compact }: TicketListProps) => (
   <div style={{ overflowX: 'auto' }}>
-    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: compact ? '680px' : '960px' }}>
+    <table
+      style={{
+        width: '100%',
+        borderCollapse: 'separate',
+        borderSpacing: 0,
+        minWidth: compact ? '680px' : '960px'
+      }}
+    >
       <thead>
-        <tr style={{ textAlign: 'left', textTransform: 'uppercase', fontSize: '11px', letterSpacing: '0.3em', color: 'var(--ink-200)' }}>
-          <th style={{ padding: '12px 8px' }}>Ticket</th>
-          <th>Requester</th>
-          <th>Assignee</th>
-          <th>Status</th>
-          <th>Priority</th>
-          <th>Updated</th>
+        <tr style={{ textAlign: 'left', fontSize: '12px', color: 'var(--ink-400)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          {['Ticket', 'Requester', 'Assignee', 'Status', 'Priority', 'Updated'].map((heading) => (
+            <th key={heading} style={{ padding: '0 12px 12px' }} className="eyebrow">
+              {heading}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
         {tickets.map((ticket) => (
-          <tr key={ticket.id} style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-            <td style={{ padding: '16px 8px' }}>
+          <tr
+            key={ticket.id}
+            style={{
+              background: 'var(--panel-bg)',
+              borderRadius: 'var(--radius-medium)',
+              border: '1px solid var(--border-light)',
+              boxShadow: 'var(--shadow-widget)'
+            }}
+          >
+            <td style={{ padding: '18px 12px' }}>
               <Link to={`/${role === 'user' ? 'user' : role}/tickets/${ticket.id}`} style={{ fontWeight: 600 }}>
                 {ticket.title}
               </Link>
-              <p style={{ margin: '4px 0 0', color: 'var(--ink-100)', fontSize: '14px' }}>{ticket.category}</p>
+              <p style={{ margin: '4px 0 0', color: 'var(--ink-400)', fontSize: '14px' }}>{ticket.category}</p>
             </td>
-            <td>{ticket.requester}</td>
-            <td>{ticket.assignee ?? 'Unassigned'}</td>
-            <td>
+            <td style={{ padding: '18px 12px' }}>{ticket.requester}</td>
+            <td style={{ padding: '18px 12px' }}>{ticket.assignee ?? 'Unassigned'}</td>
+            <td style={{ padding: '18px 12px' }}>
               <span
+                className="pill"
                 style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
                   background: `${statusPalette[ticket.status]}22`,
-                  color: statusPalette[ticket.status],
-                  fontSize: '12px',
-                  fontWeight: 600
+                  color: statusPalette[ticket.status]
                 }}
               >
                 {ticket.status.replace('_', ' ')}
               </span>
             </td>
-            <td style={{ textTransform: 'capitalize' }}>{ticket.priority}</td>
-            <td>{formatDistanceToNow(new Date(ticket.updatedAt), { addSuffix: true })}</td>
+            <td style={{ padding: '18px 12px', textTransform: 'capitalize' }}>{ticket.priority}</td>
+            <td style={{ padding: '18px 12px', color: 'var(--ink-400)' }}>
+              {formatDistanceToNow(new Date(ticket.updatedAt), { addSuffix: true })}
+            </td>
           </tr>
         ))}
       </tbody>

@@ -33,7 +33,7 @@ const EngineerDashboard = () => {
           <TicketList tickets={tickets} role="engineer" />
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ borderRadius: '24px', border: '1px solid rgba(255,255,255,0.12)', padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '20px' }}>
             <h3 style={{ marginTop: 0 }}>Teammate pulse</h3>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {['Anika · Networking', 'Prakash · Field', 'Rita · Apps'].map((mate) => (
@@ -44,9 +44,9 @@ const EngineerDashboard = () => {
               ))}
             </ul>
           </div>
-          <div style={{ borderRadius: '24px', border: '1px solid rgba(255,255,255,0.12)', padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '20px' }}>
             <h3 style={{ marginTop: 0 }}>Notifications</h3>
-            <p style={{ color: 'var(--ink-100)', fontSize: '14px' }}>Shift handoffs, approvals, and SLA breaches land here just like the Figma alerts.</p>
+            <p style={{ color: 'var(--ink-500)', fontSize: '14px' }}>Shift handoffs, approvals, and SLA breaches land here just like the Figma alerts.</p>
           </div>
         </div>
       </section>

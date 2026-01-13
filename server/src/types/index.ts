@@ -31,3 +31,58 @@ export interface Comment {
   visibility: 'public' | 'internal';
   created_at: Date;
 }
+
+export interface ImportBatch {
+  id: string;
+  source: string;
+  status: 'draft' | 'running' | 'completed' | 'failed';
+  recordsTotal: number;
+  recordsSuccess: number;
+  errors: number;
+  schedule?: string;
+  actor?: string;
+  createdAt: string;
+}
+
+export interface Notification {
+  id: string;
+  title: string;
+  body: string;
+  audience: 'admin' | 'engineer' | 'user';
+  ticketId?: string;
+  createdAt: string;
+}
+
+export interface RemoteSession {
+  id: string;
+  ticketId: string;
+  state: 'scheduled' | 'live' | 'closed';
+  provider: string;
+  pin?: string;
+  startedAt?: string;
+  endedAt?: string;
+  ticketTitle?: string;
+  requester?: string;
+  site?: string;
+}
+
+export interface TicketApproval {
+  id: string;
+  ticketId: string;
+  approverId?: string;
+  approverName?: string;
+  state: 'pending' | 'approved' | 'rejected';
+  note?: string;
+  createdAt: string;
+  ticketTitle?: string;
+}
+
+export interface TeamRosterEntry {
+  id: string;
+  name: string;
+  role: string;
+  status: 'Online' | 'Remote' | 'Away';
+  team?: string;
+  skills: string[];
+  load?: string;
+}
