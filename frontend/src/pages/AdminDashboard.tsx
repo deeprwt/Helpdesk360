@@ -16,49 +16,64 @@ const AdminDashboard = () => {
 
   return (
     <LayoutShell
-      title="Admin runway"
-      subtitle="Track SLA burn-down, orchestrate imports, push broadcast notifications—all mapped from the Helpdesk Automation Tool boards."
+      title="Admin Dashboard"
+      subtitle="Monitor SLA compliance, team performance, and system health"
       navItems={adminNav}
-      accent="amber"
+      accent="admin"
       actions={
-        <button
-          style={{
-            borderRadius: '999px',
-            border: 'none',
-            padding: '14px 28px',
-            background: 'var(--accent-amber)',
-            color: '#15182c',
-            fontWeight: 600,
-            cursor: 'pointer'
-          }}
-        >
-          + New automation
+        <button className="btn btn-primary">
+          <span>➕</span>
+          New Automation
         </button>
       }
     >
-      <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
-        {insights?.stats.map((stat) => <StatCard key={stat.label} {...stat} />)}
+      {/* Key Metrics Section */}
+      <section style={{ marginBottom: '24px' }}>
+        <h2 style={{ marginBottom: '16px', fontSize: '16px', color: 'var(--ink-700)' }}>Key Metrics</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+          {insights?.stats.map((stat) => <StatCard key={stat.label} {...stat} />)}
+        </div>
       </section>
 
-      <section style={{ marginTop: '32px', display: 'grid', gap: '24px', gridTemplateColumns: '2fr 1fr', alignItems: 'start' }}>
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '16px' }}>
-            <h2 style={{ margin: 0 }}>Live ticket mix</h2>
-            <span style={{ color: 'var(--ink-400)', fontSize: '14px' }}>Synced every 60s</span>
+      {/* Main Content Grid */}
+      <div style={{ display: 'grid', gap: '24px', gridTemplateColumns: '1fr 380px' }}>
+        {/* Ticket List */}
+        <div className="card">
+          <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h2 style={{ fontSize: '16px', fontWeight: 600 }}>Active Tickets</h2>
+              <p style={{ fontSize: '13px', color: 'var(--ink-500)', marginTop: '2px' }}>
+                Real-time sync • Updated 30s ago
+              </p>
+            </div>
+            <button className="btn btn-secondary" style={{ fontSize: '12px', padding: '6px 12px' }}>
+              ⟲ Refresh
+            </button>
           </div>
-          <TicketList tickets={tickets} role="admin" />
+          <div className="card-body" style={{ padding: 0 }}>
+            <TicketList tickets={tickets} role="admin" />
+          </div>
         </div>
-        <div className="glass-panel" style={{ padding: '20px' }}>
-          <h3 style={{ marginTop: 0 }}>Backlog pressure</h3>
-          <Timeline
-            items={backlog.map((ticket) => ({
-              label: ticket.title,
-              timestamp: new Date(ticket.updatedAt).toLocaleString(),
-              meta: `${ticket.team} · ${ticket.status.replace('_', ' ')}`
-            }))}
-          />
+
+        {/* Backlog Sidebar */}
+        <div className="card">
+          <div className="card-header">
+            <h3 style={{ fontSize: '14px', fontWeight: 600 }}>Backlog Pressure</h3>
+            <p style={{ fontSize: '12px', color: 'var(--ink-500)', marginTop: '2px' }}>
+              {backlog.length} items requiring attention
+            </p>
+          </div>
+          <div className="card-body">
+            <Timeline
+              items={backlog.map((ticket) => ({
+                label: ticket.title,
+                timestamp: new Date(ticket.updatedAt).toLocaleString(),
+                meta: `${ticket.team} · ${ticket.status.replace('_', ' ')}`
+              }))}
+            />
+          </div>
         </div>
-      </section>
+      </div>
     </LayoutShell>
   );
 };

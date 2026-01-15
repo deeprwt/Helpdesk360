@@ -1,100 +1,205 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import clsx from 'clsx';
 
 interface NavItem {
   label: string;
   href: string;
+  icon?: string;
 }
 
 interface LayoutShellProps {
   title: string;
   subtitle?: string;
   navItems: NavItem[];
-  accent?: 'amber' | 'teal' | 'violet';
+  accent?: 'admin' | 'engineer' | 'user';
   actions?: ReactNode;
   children: ReactNode;
+  breadcrumbs?: { label: string; href?: string }[];
 }
 
-const accentMap: Record<NonNullable<LayoutShellProps['accent']>, string> = {
-  amber: 'linear-gradient(90deg, #ffcc00 0%, #f6b73c 100%)',
-  teal: 'linear-gradient(90deg, #12c6c2 0%, #1a7a5e 100%)',
-  violet: 'linear-gradient(90deg, #3f8cff 0%, #006dc7 100%)'
+const accentColors: Record<NonNullable<LayoutShellProps['accent']>, string> = {
+  admin: 'var(--primary-500)',
+  engineer: 'var(--status-progress)',
+  user: 'var(--accent-info)'
 };
 
-const accentShadow: Record<NonNullable<LayoutShellProps['accent']>, string> = {
-  amber: 'rgba(255, 204, 0, 0.35)',
-  teal: 'rgba(18, 198, 194, 0.35)',
-  violet: 'rgba(63, 140, 255, 0.35)'
-};
-
-const LayoutShell = ({ title, subtitle, navItems, accent = 'amber', actions, children }: LayoutShellProps) => {
+const LayoutShell = ({ title, subtitle, navItems, accent = 'admin', actions, children, breadcrumbs }: LayoutShellProps) => {
   const location = useLocation();
+  const [sidebarCollapsed] = useState(false);
+  
+  const accentColor = accentColors[accent];
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--page-bg)' }}>
-      <div style={{ padding: '32px clamp(20px, 4vw, 64px)' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--page-bg)' }}>
+      {/* Sidebar Navigation */}
+      <aside
+        style={{
+          width: sidebarCollapsed ? 'var(--sidebar-collapsed-width)' : 'var(--sidebar-width)',
+          background: 'var(--sidebar-bg)',
+          borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          transition: 'width 0.2s ease',
+          position: 'sticky',
+          top: 0,
+          height: '100vh',
+          overflow: 'hidden'
+        }}
+      >
+        {/* Logo/Brand */}
         <div
           style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
+            padding: '20px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '32px'
+            alignItems: 'center',
+            gap: '12px'
           }}
         >
-          <header
+          <div
             style={{
-              background: 'var(--gradient-hero)',
-              borderRadius: '32px',
-              padding: '32px',
-              border: '1px solid var(--border-light)',
-              boxShadow: 'var(--shadow-panel)',
+              width: '32px',
+              height: '32px',
+              borderRadius: 'var(--radius-md)',
+              background: accentColor,
               display: 'flex',
-              flexDirection: 'column',
-              gap: '20px'
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontWeight: 700,
+              fontSize: '16px',
+              flexShrink: 0
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
-              <div>
-                <p className="eyebrow">Helpdesk Automation</p>
-                <h1 style={{ marginTop: '4px' }}>{title}</h1>
-                {subtitle && (
-                  <p style={{ marginTop: '8px', color: 'var(--ink-500)', maxWidth: '640px' }}>{subtitle}</p>
-                )}
+            HD
+          </div>
+          {!sidebarCollapsed && (
+            <div>
+              <div style={{ color: 'white', fontWeight: 600, fontSize: '14px' }}>Help Desk</div>
+              <div style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '12px', textTransform: 'capitalize' }}>
+                {accent} Portal
               </div>
-              {actions && (
-                <div style={{ display: 'flex', alignItems: 'center' }}>{actions}</div>
-              )}
             </div>
-            <nav style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              {navItems.map((item) => {
-                const active = item.href === location.pathname;
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    style={{
-                      padding: '12px 20px',
-                      borderRadius: 'var(--radius-pill)',
-                      border: `1px solid ${active ? 'transparent' : 'var(--border-light)'}`,
-                      background: active ? accentMap[accent] : 'transparent',
-                      color: active ? '#fff' : 'var(--ink-600)',
-                      fontWeight: 600,
-                      fontSize: '14px',
-                      boxShadow: active ? `0 12px 30px ${accentShadow[accent]}` : 'none'
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </nav>
-          </header>
-          <main className={clsx('glass-panel')} style={{ padding: '32px', background: 'var(--panel-bg)' }}>
-            {children}
-          </main>
+          )}
         </div>
+
+        {/* Navigation Items */}
+        <nav style={{ flex: 1, padding: '16px 0', overflowY: 'auto' }}>
+          {navItems.map((item) => {
+            const active = item.href === location.pathname;
+            return (
+              <Link
+                key={item.href}
+                to={item.href}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 20px',
+                  margin: '2px 12px',
+                  borderRadius: 'var(--radius-md)',
+                  background: active ? 'var(--sidebar-active)' : 'transparent',
+                  color: active ? 'white' : 'rgba(255, 255, 255, 0.7)',
+                  fontWeight: active ? 600 : 500,
+                  fontSize: '14px',
+                  borderLeft: active ? `3px solid ${accentColor}` : '3px solid transparent',
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => {
+                  if (!active) {
+                    e.currentTarget.style.background = 'var(--sidebar-hover)';
+                    e.currentTarget.style.color = 'white';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!active) {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                  }
+                }}
+              >
+                {item.icon && (
+                  <span style={{ fontSize: '18px', flexShrink: 0 }}>{item.icon}</span>
+                )}
+                {!sidebarCollapsed && <span>{item.label}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User Section */}
+        <div
+          style={{
+            padding: '16px 20px',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: '12px'
+          }}
+        >
+          {!sidebarCollapsed && (
+            <>
+              <div style={{ fontWeight: 600, color: 'white' }}>System User</div>
+              <div style={{ marginTop: '4px' }}>v1.0.0</div>
+            </>
+          )}
+        </div>
+      </aside>
+
+      {/* Main Content Area */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        {/* Top Bar */}
+        <header
+          style={{
+            background: 'white',
+            borderBottom: '1px solid var(--border-light)',
+            padding: '16px 32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '20px',
+            position: 'sticky',
+            top: 0,
+            zIndex: 10,
+            boxShadow: 'var(--shadow-sm)'
+          }}
+        >
+          <div style={{ flex: 1, minWidth: 0 }}>
+            {breadcrumbs && breadcrumbs.length > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '12px', color: 'var(--ink-500)' }}>
+                {breadcrumbs.map((crumb, idx) => (
+                  <span key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    {crumb.href ? (
+                      <Link to={crumb.href} style={{ color: 'var(--primary-500)', hover: { textDecoration: 'underline' } }}>
+                        {crumb.label}
+                      </Link>
+                    ) : (
+                      <span>{crumb.label}</span>
+                    )}
+                    {idx < breadcrumbs.length - 1 && <span>/</span>}
+                  </span>
+                ))}
+              </div>
+            )}
+            <h1 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--ink-900)' }}>{title}</h1>
+            {subtitle && (
+              <p style={{ marginTop: '4px', color: 'var(--ink-500)', fontSize: '14px' }}>{subtitle}</p>
+            )}
+          </div>
+          {actions && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>{actions}</div>
+          )}
+        </header>
+
+        {/* Page Content */}
+        <main
+          style={{
+            flex: 1,
+            padding: '24px 32px',
+            overflowY: 'auto'
+          }}
+        >
+          {children}
+        </main>
       </div>
     </div>
   );

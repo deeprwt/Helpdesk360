@@ -8,72 +8,108 @@ interface TicketListProps {
   compact?: boolean;
 }
 
-const statusPalette: Record<Ticket['status'], string> = {
-  new: '#95d65c',
-  open: '#12c6c2',
-  in_progress: '#ffc857',
-  waiting_customer: '#ff8f70',
-  waiting_vendor: '#a3a1ff',
-  remote_required: '#6a64ff',
-  closed: '#1dd3b0',
-  out_of_sla: '#ff6b6b'
+const statusConfig: Record<Ticket['status'], { color: string; bg: string; label: string }> = {
+  new: { color: 'var(--status-open)', bg: 'rgba(59, 130, 246, 0.1)', label: 'New' },
+  open: { color: 'var(--status-open)', bg: 'rgba(59, 130, 246, 0.1)', label: 'Open' },
+  in_progress: { color: 'var(--status-progress)', bg: 'rgba(139, 92, 246, 0.1)', label: 'In Progress' },
+  waiting_customer: { color: 'var(--status-pending)', bg: 'rgba(245, 158, 11, 0.1)', label: 'Waiting Customer' },
+  waiting_vendor: { color: 'var(--status-pending)', bg: 'rgba(245, 158, 11, 0.1)', label: 'Waiting Vendor' },
+  remote_required: { color: 'var(--status-progress)', bg: 'rgba(139, 92, 246, 0.1)', label: 'Remote Required' },
+  closed: { color: 'var(--status-resolved)', bg: 'rgba(16, 185, 129, 0.1)', label: 'Closed' },
+  out_of_sla: { color: 'var(--accent-error)', bg: 'rgba(239, 68, 68, 0.1)', label: 'Out of SLA' }
+};
+
+const priorityConfig: Record<string, { color: string; icon: string }> = {
+  critical: { color: 'var(--accent-error)', icon: '🔴' },
+  high: { color: 'var(--status-pending)', icon: '🟡' },
+  medium: { color: 'var(--status-open)', icon: '🔵' },
+  low: { color: 'var(--ink-400)', icon: '⚪' }
 };
 
 const TicketList = ({ tickets, role, compact }: TicketListProps) => (
-  <div style={{ overflowX: 'auto' }}>
-    <table
-      style={{
-        width: '100%',
-        borderCollapse: 'separate',
-        borderSpacing: 0,
-        minWidth: compact ? '680px' : '960px'
-      }}
-    >
+  <div className="table-container" style={{ border: 'none', borderRadius: 0 }}>
+    <table className="table">
       <thead>
-        <tr style={{ textAlign: 'left', fontSize: '12px', color: 'var(--ink-400)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-          {['Ticket', 'Requester', 'Assignee', 'Status', 'Priority', 'Updated'].map((heading) => (
-            <th key={heading} style={{ padding: '0 12px 12px' }} className="eyebrow">
-              {heading}
-            </th>
-          ))}
+        <tr>
+          <th style={{ width: '40%' }}>Ticket</th>
+          <th style={{ width: '15%' }}>Requester</th>
+          <th style={{ width: '15%' }}>Assignee</th>
+          <th style={{ width: '12%' }}>Status</th>
+          <th style={{ width: '10%' }}>Priority</th>
+          <th style={{ width: '8%' }}>Updated</th>
         </tr>
       </thead>
       <tbody>
-        {tickets.map((ticket) => (
-          <tr
-            key={ticket.id}
-            style={{
-              background: 'var(--panel-bg)',
-              borderRadius: 'var(--radius-medium)',
-              border: '1px solid var(--border-light)',
-              boxShadow: 'var(--shadow-widget)'
-            }}
-          >
-            <td style={{ padding: '18px 12px' }}>
-              <Link to={`/${role === 'user' ? 'user' : role}/tickets/${ticket.id}`} style={{ fontWeight: 600 }}>
-                {ticket.title}
-              </Link>
-              <p style={{ margin: '4px 0 0', color: 'var(--ink-400)', fontSize: '14px' }}>{ticket.category}</p>
-            </td>
-            <td style={{ padding: '18px 12px' }}>{ticket.requester}</td>
-            <td style={{ padding: '18px 12px' }}>{ticket.assignee ?? 'Unassigned'}</td>
-            <td style={{ padding: '18px 12px' }}>
-              <span
-                className="pill"
-                style={{
-                  background: `${statusPalette[ticket.status]}22`,
-                  color: statusPalette[ticket.status]
-                }}
-              >
-                {ticket.status.replace('_', ' ')}
-              </span>
-            </td>
-            <td style={{ padding: '18px 12px', textTransform: 'capitalize' }}>{ticket.priority}</td>
-            <td style={{ padding: '18px 12px', color: 'var(--ink-400)' }}>
-              {formatDistanceToNow(new Date(ticket.updatedAt), { addSuffix: true })}
+        {tickets.length === 0 ? (
+          <tr>
+            <td colSpan={6} style={{ textAlign: 'center', padding: '40px', color: 'var(--ink-400)' }}>
+              No tickets found
             </td>
           </tr>
-        ))}
+        ) : (
+          tickets.map((ticket) => {
+            const statusInfo = statusConfig[ticket.status];
+            const priorityInfo = priorityConfig[ticket.priority] || priorityConfig.medium;
+            
+            return (
+              <tr key={ticket.id}>
+                <td>
+                  <Link 
+                    to={`/${role === 'user' ? 'user' : role}/tickets/${ticket.id}`} 
+                    style={{ 
+                      fontWeight: 600,
+                      color: 'var(--primary-500)',
+                      display: 'block',
+                      marginBottom: '4px'
+                    }}
+                  >
+                    #{ticket.id} {ticket.title}
+                  </Link>
+                  <span style={{ fontSize: '12px', color: 'var(--ink-500)' }}>
+                    {ticket.category}
+                  </span>
+                </td>
+                <td>{ticket.requester}</td>
+                <td>
+                  {ticket.assignee ? (
+                    <span>{ticket.assignee}</span>
+                  ) : (
+                    <span style={{ color: 'var(--ink-400)', fontStyle: 'italic' }}>Unassigned</span>
+                  )}
+                </td>
+                <td>
+                  <span
+                    className="badge"
+                    style={{
+                      background: statusInfo.bg,
+                      color: statusInfo.color,
+                      fontSize: '12px',
+                      fontWeight: 500
+                    }}
+                  >
+                    {statusInfo.label}
+                  </span>
+                </td>
+                <td>
+                  <span style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '6px',
+                    fontSize: '13px',
+                    color: priorityInfo.color,
+                    fontWeight: 500
+                  }}>
+                    <span style={{ fontSize: '10px' }}>{priorityInfo.icon}</span>
+                    <span style={{ textTransform: 'capitalize' }}>{ticket.priority}</span>
+                  </span>
+                </td>
+                <td style={{ fontSize: '13px', color: 'var(--ink-500)' }}>
+                  {formatDistanceToNow(new Date(ticket.updatedAt), { addSuffix: false })}
+                </td>
+              </tr>
+            );
+          })
+        )}
       </tbody>
     </table>
   </div>

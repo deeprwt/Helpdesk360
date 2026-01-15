@@ -1,1 +1,3 @@
-node_modules
+Figma Export 1/*.pdf
+node_modules/
+.env

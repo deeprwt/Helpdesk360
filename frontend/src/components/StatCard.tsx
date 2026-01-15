@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { InsightStat } from '../types';
 
 interface StatCardProps extends InsightStat {
@@ -6,49 +5,72 @@ interface StatCardProps extends InsightStat {
 }
 
 const StatCard = ({ label, value, trend, variant = 'neutral', icon }: StatCardProps) => {
-  const variantColor =
-    variant === 'positive' ? 'var(--accent-green)' : variant === 'negative' ? '#ff6b6b' : 'var(--ink-400)';
+  const variantConfig = {
+    positive: { color: 'var(--accent-success)', bg: 'rgba(16, 185, 129, 0.1)', icon: '↗' },
+    negative: { color: 'var(--accent-error)', bg: 'rgba(239, 68, 68, 0.1)', icon: '↘' },
+    neutral: { color: 'var(--ink-400)', bg: 'rgba(107, 114, 128, 0.1)', icon: '→' }
+  };
+
+  const config = variantConfig[variant];
 
   return (
     <div
-      className={clsx('widget-card')}
+      className="card"
       style={{
-        padding: '24px',
-        minHeight: '150px',
+        padding: '20px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px'
+        gap: '12px',
+        background: 'white'
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span className="eyebrow">{label}</span>
-        {icon && (
-          <span
-            style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '12px',
-              background: 'var(--panel-muted)',
-              display: 'grid',
-              placeItems: 'center',
-              fontSize: '18px'
-            }}
-          >
-            {icon}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div style={{ flex: 1 }}>
+          <span className="label" style={{ fontSize: '12px', color: 'var(--ink-500)', marginBottom: '8px' }}>
+            {label}
           </span>
+          <div style={{ 
+            fontSize: '32px', 
+            fontWeight: 700, 
+            color: 'var(--ink-900)',
+            lineHeight: 1,
+            marginTop: '8px'
+          }}>
+            {value}
+          </div>
+        </div>
+        {icon && (
+          <div style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: 'var(--radius-md)',
+            background: 'var(--panel-muted)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '20px'
+          }}>
+            {icon}
+          </div>
         )}
       </div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px' }}>
-        <span
-          style={{
-            fontSize: '40px',
-            fontWeight: 600,
-            color: 'var(--ink-900)'
-          }}
-        >
-          {value}
+      
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        gap: '6px',
+        padding: '6px 10px',
+        borderRadius: 'var(--radius-sm)',
+        background: config.bg,
+        width: 'fit-content'
+      }}>
+        <span style={{ color: config.color, fontSize: '14px', fontWeight: 600 }}>
+          {config.icon}
         </span>
-        <span style={{ color: variantColor, fontWeight: 600 }}>{trend > 0 ? '+' : ''}{trend}%</span>
+        <span style={{ color: config.color, fontSize: '13px', fontWeight: 600 }}>
+          {trend > 0 ? '+' : ''}{trend}%
+        </span>
+        <span style={{ color: 'var(--ink-500)', fontSize: '12px' }}>vs last period</span>
       </div>
     </div>
   );

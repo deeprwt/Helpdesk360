@@ -8,48 +8,84 @@ const EngineerDashboard = () => {
 
   return (
     <LayoutShell
-      title="Engineer runway"
-      subtitle="Blend remote approvals, teammate visibility, and SLA guardrails. The layout mirrors the engineer prototype: vertical tickets, teammate chips, and remote session callouts."
+      title="Engineer Dashboard"
+      subtitle="Manage assigned tickets, collaborate with team members, and initiate remote support sessions"
       navItems={engineerNav}
-      accent="teal"
+      accent="engineer"
       actions={
-        <button
-          style={{
-            borderRadius: '999px',
-            border: 'none',
-            padding: '12px 22px',
-            background: 'var(--accent-teal)',
-            color: '#041421',
-            fontWeight: 600
-          }}
-        >
-          Start remote assist
+        <button className="btn btn-primary">
+          <span>💻</span>
+          Start Remote Session
         </button>
       }
     >
-      <section style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', alignItems: 'start' }}>
-        <div>
-          <h2>My live tickets</h2>
-          <TicketList tickets={tickets} role="engineer" />
+      <div style={{ display: 'grid', gap: '24px', gridTemplateColumns: '1fr 340px' }}>
+        {/* Ticket Queue */}
+        <div className="card">
+          <div className="card-header">
+            <h2 style={{ fontSize: '16px', fontWeight: 600 }}>My Ticket Queue</h2>
+            <p style={{ fontSize: '13px', color: 'var(--ink-500)', marginTop: '2px' }}>
+              {tickets.length} active assignments
+            </p>
+          </div>
+          <div className="card-body" style={{ padding: 0 }}>
+            <TicketList tickets={tickets} role="engineer" />
+          </div>
         </div>
+
+        {/* Sidebar */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <h3 style={{ marginTop: 0 }}>Teammate pulse</h3>
-            <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {['Anika · Networking', 'Prakash · Field', 'Rita · Apps'].map((mate) => (
-                <li key={mate} style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600 }}>
-                  <span>{mate}</span>
-                  <span style={{ color: 'var(--accent-teal)' }}>online</span>
-                </li>
-              ))}
-            </ul>
+          {/* Team Status */}
+          <div className="card">
+            <div className="card-header">
+              <h3 style={{ fontSize: '14px', fontWeight: 600 }}>Team Status</h3>
+            </div>
+            <div className="card-body">
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {[
+                  { name: 'Anika Kumar', dept: 'Networking', status: 'online' },
+                  { name: 'Prakash Singh', dept: 'Field Support', status: 'online' },
+                  { name: 'Rita Patel', dept: 'Applications', status: 'away' }
+                ].map((mate) => (
+                  <li key={mate.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '14px' }}>
+                    <div>
+                      <div style={{ fontWeight: 600, color: 'var(--ink-900)' }}>{mate.name}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--ink-500)' }}>{mate.dept}</div>
+                    </div>
+                    <span
+                      className="badge"
+                      style={{
+                        background: mate.status === 'online' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)',
+                        color: mate.status === 'online' ? 'var(--accent-success)' : 'var(--status-pending)'
+                      }}
+                    >
+                      {mate.status}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <h3 style={{ marginTop: 0 }}>Notifications</h3>
-            <p style={{ color: 'var(--ink-500)', fontSize: '14px' }}>Shift handoffs, approvals, and SLA breaches land here just like the Figma alerts.</p>
+
+          {/* Quick Actions */}
+          <div className="card">
+            <div className="card-header">
+              <h3 style={{ fontSize: '14px', fontWeight: 600 }}>Quick Actions</h3>
+            </div>
+            <div className="card-body" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                📋 View Approvals
+              </button>
+              <button className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                💬 Team Chat
+              </button>
+              <button className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                📊 My Reports
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </LayoutShell>
   );
 };
