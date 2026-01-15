@@ -85,7 +85,7 @@ const UserNotifications = () => {
       title="Notifications"
       subtitle="Exactly like the Figma notifications drawer: SLA alerts, remote session invites, and closure summaries."
       navItems={userNav}
-      accent="violet"
+      
     >
       {notifications.length === 0 ? (
         <PagePlaceholder

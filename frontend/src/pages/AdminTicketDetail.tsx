@@ -72,7 +72,7 @@ const AdminTicketDetail = () => {
   };
 
   return (
-    <LayoutShell title={ticket.title} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={adminDetailNav(ticket.id)} accent="violet">
+    <LayoutShell title={ticket.title} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={adminDetailNav(ticket.id)} >
       <section style={{ display: 'grid', gap: '24px', gridTemplateColumns: '2fr 1fr', alignItems: 'start' }}>
         <div>
           <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>

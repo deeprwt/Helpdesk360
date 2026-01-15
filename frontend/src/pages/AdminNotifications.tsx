@@ -38,7 +38,6 @@ const AdminNotifications = () => {
       title="Notifications"
       subtitle="Matches the admin broadcast board: filter pills, alert cards, and send buttons."
       navItems={adminNav}
-      accent="amber"
     >
       <section className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>

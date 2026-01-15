@@ -32,7 +32,6 @@ const AdminImports = () => {
       title="Imports"
       subtitle="Matches the Import Data board: batch cards, timeline of refreshes, and audit table for error counts."
       navItems={adminNav}
-      accent="amber"
     >
       <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
         {displayCards.map((batch) => (

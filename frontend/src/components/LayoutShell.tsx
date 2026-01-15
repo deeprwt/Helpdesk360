@@ -169,7 +169,7 @@ const LayoutShell = ({ title, subtitle, navItems, accent = 'admin', actions, chi
                 {breadcrumbs.map((crumb, idx) => (
                   <span key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {crumb.href ? (
-                      <Link to={crumb.href} style={{ color: 'var(--primary-500)', hover: { textDecoration: 'underline' } }}>
+                      <Link to={crumb.href} style={{ color: 'var(--primary-500)'}}>
                         {crumb.label}
                       </Link>
                     ) : (

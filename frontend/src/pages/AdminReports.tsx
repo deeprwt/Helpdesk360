@@ -25,7 +25,7 @@ const AdminReports = () => (
     title="Reports & statistics"
     subtitle="KPIs, SLA trend, and incident drilldowns as in the reporting mockups."
     navItems={adminNav}
-    accent="amber"
+    
   >
     <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
       {kpis.map((item) => (

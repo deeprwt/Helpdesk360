@@ -37,7 +37,7 @@ const AdminRemote = () => {
       title="Remote session orchestration"
       subtitle="Session queue, approvals, and audit activity just like the admin remote board."
       navItems={adminNav}
-      accent="violet"
+      
     >
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
         <section className="glass-panel" style={{ padding: '24px' }}>
@@ -118,7 +118,7 @@ const AdminRemote = () => {
             {approvalList.map((approval) => (
               <li key={approval.id} style={{ border: '1px solid var(--border-strong)', borderRadius: '18px', padding: '14px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 600 }}>
-                  <span>{approval.ticketTitle ?? approval.title}</span>
+                  <span>{approval.ticketTitle ?? approval.ticketTitle}</span>
                   <span className="eyebrow" style={{ color: 'var(--ink-400)' }}>{approval.id}</span>
                 </div>
                 <p style={{ margin: '4px 0', color: 'var(--ink-500)' }}>Owner · {approval.approverName ?? '--'}</p>

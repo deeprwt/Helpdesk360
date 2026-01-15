@@ -47,7 +47,7 @@ const UserNewTicket = () => {
       title="Create ticket"
       subtitle="Matches the 'User new ticket' board: simple stacked form with priority tabs and attachment affordances."
       navItems={userNav}
-      accent="violet"
+      
     >
       <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '18px', maxWidth: '720px' }}>
         {['title', 'requester', 'site'].map((field) => (

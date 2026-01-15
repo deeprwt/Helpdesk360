@@ -55,7 +55,7 @@ const UserTicketDetail = () => {
         }
       ];
   return (
-    <LayoutShell title={ticket.title} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={userNav} accent="violet">
+    <LayoutShell title={ticket.title} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={userNav} >
       <section style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
         <div className="glass-panel" style={{ padding: '24px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>

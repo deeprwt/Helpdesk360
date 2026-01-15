@@ -13,7 +13,7 @@ const AdminPeople = () => (
     title="People & permissions"
     subtitle="Matches the people boards: directory cards, quick actions, and add-engineer forms."
     navItems={adminNav}
-    accent="amber"
+    
   >
     <section style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '24px' }}>
       <div className="glass-panel" style={{ padding: '24px' }}>
