@@ -13,7 +13,7 @@ const EngineerTicketDetail = () => {
   }
 
   return (
-    <LayoutShell title={`Working: ${ticket.title}`} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={engineerDetailNav(ticket.id)} accent="teal">
+    <LayoutShell title={`Working: ${ticket.title}`} subtitle={`${ticket.requester} · ${ticket.site}`} navItems={engineerDetailNav(ticket.id)}>
       <section style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
         <div>
           <h2>Activity timeline</h2>

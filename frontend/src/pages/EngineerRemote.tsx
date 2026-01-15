@@ -46,7 +46,6 @@ const EngineerRemote = () => {
       title="Remote console"
       subtitle="Session console, chat, and controls the way the engineer board depicts."
       navItems={engineerNav}
-      accent="teal"
     >
     <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '24px' }}>
       <section className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>

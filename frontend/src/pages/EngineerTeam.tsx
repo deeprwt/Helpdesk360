@@ -39,7 +39,6 @@ const EngineerTeam = () => {
       title="Team mates"
       subtitle="Presence, skills, and escalations per the engineer roster board."
       navItems={engineerNav}
-      accent="teal"
     >
       <section style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '24px' }}>
         <div className="glass-panel" style={{ padding: '24px' }}>
